@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Şaka Buton</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+  }
+  h1 {
+    font-size: 1.8em;
+    margin-bottom: 30px;
+  }
+  button {
+    padding: 15px 25px;
+    font-size: 18px;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    transition: 0.2s ease;
+    position: relative;
+  }
+  #yesBtn { background-color: #4CAF50; color: white; }
+  #noBtn {
+    background-color: #f44336;
+    color: white;
+    position: absolute;
+  }
+  #message {
+    margin-top: 20px;
+    font-size: 18px;
+    display: none;
+    color: #333;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>aşkım götünü 1 kere ısırabilir miyim?</h1>
+  <button id="yesBtn">Evet</button>
+  <button id="noBtn">Hayır</button>
+  <div id="message">bana hayır diyemeyeceğini biliyordum 😏</div>
+</div>
+
+<script>
+const noBtn = document.getElementById('noBtn');
+const message = document.getElementById('message');
+
+// Hayır butonunu rastgele taşımak:
+function moveNoBtn() {
+  const rect = noBtn.getBoundingClientRect();
+  const newX = Math.random() * (window.innerWidth - rect.width);
+  const newY = Math.random() * (window.innerHeight - rect.height);
+  noBtn.style.left = newX + 'px';
+  noBtn.style.top = newY + 'px';
+}
+
+// Dokunma ile kaçır (mobil uyumlu)
+noBtn.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  moveNoBtn();
+});
+// Fare ile yaklaşınca da kaçır
+document.body.addEventListener('mousemove', (e) => {
+  const mouseX = e.clientX;
+  const mouseY = e.clientY;
+  const rect = noBtn.getBoundingClientRect();
+  if (Math.abs(mouseX - (rect.left + rect.width/2)) < 60 &&
+      Math.abs(mouseY - (rect.top + rect.height/2)) < 60) {
+    moveNoBtn();
+  }
+});
+
+// Evet’e basınca otomatik yeni sekmede yönlendir
+document.getElementById('yesBtn').addEventListener('click', () => {
+  window.open('https://www.youtube.com/watch?v=CD1KilxGa4M', '_blank');
+  message.style.display = 'block';
+});
+</script>
+</body>
+</html>
